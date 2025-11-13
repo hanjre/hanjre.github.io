@@ -550,9 +550,9 @@ function getLevel(value) {
   return LEVELS.find(l => value >= l.min && value <= l.max) || LEVELS[0];
 }
 
-// ===== Your data =====
-const labels = ['Python', 'Pandas', 'SQL', 'PostgreSQL', 'Excel', 'Tableau', 'Power BI'];
-const scores = [40, 38, 55, 55, 45, 55, 41];
+// ===== Your data ====='Pandas','PostgreSQL',
+const labels = ['Python',  'SQL', 'Excel', 'Tableau', 'Power BI'];
+const scores = [40, 55, 45, 55, 41];
 const barColors = scores.map(v => getLevel(v).bar);
 
 // ===== Background bands plugin =====
