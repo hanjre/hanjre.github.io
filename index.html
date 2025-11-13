@@ -97,7 +97,7 @@ color: var(--primary);
 border-bottom: 2px solid var(--accent);
 display: inline-block;
 padding-bottom: 5px;
-margin-bottom: 20px;
+margin-bottom: 1px;
 }
 
 #skills canvas { max-width: 100%; margin-top: 30px; }
@@ -107,7 +107,7 @@ background: var(--card-bg);
 border: 1px solid #ddd;
 border-radius: 8px;
 padding: 20px;
-margin-bottom: 20px;
+margin-bottom: 1px;
 transition: transform 0.3s, box-shadow 0.3s, opacity 1s, transform 1s, background 0.3s;
 opacity: 0;
 transform: translateY(30px);
@@ -122,7 +122,7 @@ transform: translateY(-5px);
 box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-#resume .job { margin-bottom: 20px; }
+#resume .job { margin-bottom: 1px; }
 #resume .job h3 { margin: 0; color: var(--accent); }
 
 .download-btn {
@@ -166,12 +166,12 @@ transition: background 0.4s, color 0.4s;
 header { padding: 60px 15px; }
 header h1 { font-size: 2em; }
 header p { font-size: 1em; }
-section { padding: 40px 15px; }
+section { padding: 1px 15px; }
 #contact a.button, .download-btn {
 display: block;
 width: 100%;
 text-align: center;
-margin-bottom: 15px;
+margin-bottom: 5px;
 }
 }
 
@@ -292,6 +292,22 @@ section h2 { font-size: 1.4em; }
 .copy-btn { margin-left: .5rem; padding: 4px 8px; border-radius:6px; cursor:pointer; border:1px solid #ddd; background:#fff; }
 .copy-btn:hover { filter:brightness(.98); }
 .visually-hidden { position:absolute !important; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+/* Reduce spacing between About Me text and Skills heading */
+#about {
+  padding-bottom: 15px; 
+}
+
+#skills {
+  padding-top: 15px;
+}
+
+section p:last-of-type {
+  margin-bottom: 10px;
+}
+
+section h2 {
+  margin-top: 10;
+}
 </style>
 </head>
 
