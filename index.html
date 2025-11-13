@@ -15,13 +15,13 @@
 <meta property="og:description" content="Explore dashboards, visualizations, and data insights created by Jeremy Harris, Data Analyst." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://example.com/preview-image.png" /> <!-- Replace with your hosted image -->
-<meta property="og:url" content="https://yourwebsite.com" />
+<meta property="og:url" content="https://hanjre.github.io" />
 
 <!-- ===== Twitter Card ===== -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Jeremy Harris | Data Analyst Portfolio" />
 <meta name="twitter:description" content="Explore dashboards, visualizations, and data insights by Jeremy Harris, Data Analyst." />
-<meta name="twitter:image" content="https://example.com/preview-image.png" />
+<meta name="twitter:image" content="https://hanjre.github.io/preview-image.png" />
 
 <!-- ===== Favicon ===== -->
 <link rel="icon" type="image/png" href="favicon.png" /> <!-- Replace favicon.png with your icon -->
@@ -521,13 +521,13 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// ===== Level config =====
+// ===== Level config ===== Novice, Beginner, Intermediate, Advances, Expert
 const LEVELS = [
-  {min: 0,  max: 20,  name: 'Novice',       band: 'rgba(220, 53, 69, 0.08)',  bar: 'rgba(220, 53, 69, 0.8)'},
-  {min: 21, max: 40,  name: 'Beginner',     band: 'rgba(255, 193, 7, 0.10)',  bar: 'rgba(255, 193, 7, 0.85)'},
-  {min: 41, max: 60,  name: 'Intermediate', band: 'rgba(13, 110, 253, 0.08)', bar: 'rgba(13, 110, 253, 0.85)'},
-  {min: 61, max: 80,  name: 'Advanced',     band: 'rgba(25, 135, 84, 0.10)',  bar: 'rgba(25, 135, 84, 0.85)'},
-  {min: 81, max: 100, name: 'Expert',       band: 'rgba(111, 66, 193, 0.10)', bar: 'rgba(111, 66, 193, 0.85)'},
+  {min: 0,  max: 20,  name: '',       band: 'rgba(220, 53, 69, 0.08)',  bar: 'rgba(220, 53, 69, 0.8)'},
+  {min: 21, max: 40,  name: '',     band: 'rgba(255, 193, 7, 0.10)',  bar: 'rgba(255, 193, 7, 0.85)'},
+  {min: 41, max: 60,  name: '', band: 'rgba(13, 110, 253, 0.08)', bar: 'rgba(13, 110, 253, 0.85)'},
+  {min: 61, max: 80,  name: '',     band: 'rgba(25, 135, 84, 0.10)',  bar: 'rgba(25, 135, 84, 0.85)'},
+  {min: 81, max: 100, name: '',       band: 'rgba(111, 66, 193, 0.10)', bar: 'rgba(111, 66, 193, 0.85)'},
 ];
 
 function getLevel(value) {
@@ -536,7 +536,7 @@ function getLevel(value) {
 
 // ===== Your data =====
 const labels = ['Python', 'Pandas', 'SQL', 'PostgreSQL', 'Excel', 'Tableau', 'Power BI'];
-const scores = [28, 22, 55, 55, 50, 48, 25];
+const scores = [58, 50, 85, 85, 65, 85, 65];
 const barColors = scores.map(v => getLevel(v).bar);
 
 // ===== Background bands plugin =====
