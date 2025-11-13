@@ -456,15 +456,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Buttons -->
 <div class="resume-actions">
-  <a class="btn" href="assets/Resume/Website_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
-  <a class="btn btn-outline" href="assets/Resume/Website_Resume.pdf" download>Download Resume</a>
+  <a class="btn" href="assets/Resume/Website_Resume_2.pdf" target="_blank" rel="noopener">View Resume</a>
+  <a class="btn btn-outline" href="assets/Resume/Website_Resume_2.pdf" download>Download Resume</a>
 </div>
 
 <!-- Embedded Viewer -->
 <div class="resume-viewer" role="region" aria-label="Embedded résumé (PDF)">
-  <object data="assets/Resume/Website_Resume.pdf" type="application/pdf" width="100%" height="720">
+  <object data="assets/Resume/Website_Resume_2.pdf" type="application/pdf" width="100%" height="720">
     <p>Can’t display the PDF here. 
-      <a href="assets/Resume/Website_Resume.pdf" target="_blank" rel="noopener">Open the résumé</a>.
+      <a href="assets/Resume/Website_Resume_2.pdf" target="_blank" rel="noopener">Open the résumé</a>.
     </p>
   </object>
 </div>
@@ -521,13 +521,13 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// ===== Level config ===== Novice, Beginner, Intermediate, Advances, Expert
+// ===== Level config ===== Novice, Beginner, Intermediate, Advanced, Expert
 const LEVELS = [
-  {min: 0,  max: 20,  name: '',       band: 'rgba(220, 53, 69, 0.08)',  bar: 'rgba(220, 53, 69, 0.8)'},
-  {min: 21, max: 40,  name: '',     band: 'rgba(255, 193, 7, 0.10)',  bar: 'rgba(255, 193, 7, 0.85)'},
-  {min: 41, max: 60,  name: '', band: 'rgba(13, 110, 253, 0.08)', bar: 'rgba(13, 110, 253, 0.85)'},
-  {min: 61, max: 80,  name: '',     band: 'rgba(25, 135, 84, 0.10)',  bar: 'rgba(25, 135, 84, 0.85)'},
-  {min: 81, max: 100, name: '',       band: 'rgba(111, 66, 193, 0.10)', bar: 'rgba(111, 66, 193, 0.85)'},
+  {min: 0,  max: 20,  name: 'Novice',       band: 'rgba(220, 53, 69, 0.08)',  bar: 'rgba(220, 53, 69, 0.8)'},
+  {min: 21, max: 40,  name: 'Beginner',     band: 'rgba(255, 193, 7, 0.10)',  bar: 'rgba(255, 193, 7, 0.85)'},
+  {min: 41, max: 60,  name: 'Intermediate', band: 'rgba(13, 110, 253, 0.08)', bar: 'rgba(13, 110, 253, 0.85)'},
+  {min: 61, max: 80,  name: 'Advanced',     band: 'rgba(25, 135, 84, 0.10)',  bar: 'rgba(25, 135, 84, 0.85)'},
+  {min: 81, max: 100, name: 'Expert',       band: 'rgba(111, 66, 193, 0.10)', bar: 'rgba(111, 66, 193, 0.85)'},
 ];
 
 function getLevel(value) {
@@ -536,7 +536,7 @@ function getLevel(value) {
 
 // ===== Your data =====
 const labels = ['Python', 'Pandas', 'SQL', 'PostgreSQL', 'Excel', 'Tableau', 'Power BI'];
-const scores = [58, 50, 85, 85, 65, 85, 65];
+const scores = [40, 38, 55, 55, 45, 55, 41];
 const barColors = scores.map(v => getLevel(v).bar);
 
 // ===== Background bands plugin =====
@@ -584,7 +584,7 @@ const skillsOptions = {
         stepSize: 20,
         padding: 6,
         callback: function(value) {
-          if ([20, 40, 60, 80].includes(value)) {
+          if ([20, 40, 60, 80, 100].includes(value)) {
             const level = LEVELS.find(l => l.max === value);
             return level ? level.name.charAt(0).toUpperCase() + level.name.slice(1).toLowerCase() : '';
           }
