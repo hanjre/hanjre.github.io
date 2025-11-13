@@ -1,0 +1,396 @@
+<!doctype html><html><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/><title>Pro Command Line Cheat Sheet</title><style>body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.5;margin:24px;color:#0B2850;}code,pre{background:#f5f7fb;border:1px solid #e5e9f3;border-radius:6px;padding:2px 4px;}pre{padding:12px;overflow:auto;}table{border-collapse:collapse;}th,td{border:1px solid #e5e9f3;padding:6px 10px;}thead{background:#eef3ff;}a{color:#1f6feb;text-decoration:none;}a:hover{text-decoration:underline;}hr{border:0;border-top:1px solid #e5e9f3;margin:24px 0;}</style></head><body><br/>
+# Pro Command Line Cheat Sheet (Mac · Windows · Linux)<br/>
+<br/>
+**Audience:** Data/Dev (SQL, Python, Docker, Git, GIS) • Cross‑platform (macOS zsh, Windows PowerShell/WSL, Linux bash)  <br/>
+**Style:** Copy‑paste ready + short “why/when” mini‑tutorials<br/>
+<br/>
+---<br/>
+<br/>
+## Table of Contents<br/>
+1. [Terminal Basics &amp; Shells](#terminal-basics--shells)<br/>
+2. [Navigation &amp; Paths](#navigation--paths)<br/>
+3. [Files &amp; Folders](#files--folders)<br/>
+4. [Search &amp; Find](#search--find)<br/>
+5. [Viewing &amp; Editing Files](#viewing--editing-files)<br/>
+6. [Permissions &amp; Ownership](#permissions--ownership)<br/>
+7. [Processes &amp; System Info](#processes--system-info)<br/>
+8. [Networking &amp; Localhost](#networking--localhost)<br/>
+9. [Environment &amp; Packages](#environment--packages)<br/>
+10. [Python &amp; Virtual Environments](#python--virtual-environments)<br/>
+11. [Git &amp; GitHub Workflow](#git--github-workflow)<br/>
+12. [Docker Essentials](#docker-essentials)<br/>
+13. [Databases (Postgres + SQLite)](#databases-postgres--sqlite)<br/>
+14. [VS Code Power Moves](#vs-code-power-moves)<br/>
+15. [macOS · Windows · Linux Equivalents](#macos--windows--linux-equivalents)<br/>
+16. [Safety Nets](#safety-nets)<br/>
+<br/>
+---<br/>
+<br/>
+## Terminal Basics &amp; Shells<br/>
+**Shells:** macOS (zsh), Linux (bash), Windows (PowerShell, plus WSL for Linux shell).  <br/>
+**Where am I?** `echo $SHELL` (Mac/Linux) • `$PSVersionTable` (PowerShell).<br/>
+<br/>
+```bash<br/>
+# Open Terminal<br/>
+# macOS: Spotlight → "Terminal"<br/>
+# Windows: Start → "PowerShell" (or "Terminal"), for Linux tools install WSL.<br/>
+```<br/>
+<br/>
+**Tip:** Your prompt often shows `user@host folder %` → you’re inside `folder` on your local machine.<br/>
+<br/>
+---<br/>
+<br/>
+## Navigation &amp; Paths<br/>
+- `pwd` – print working directory<br/>
+- `ls` / `dir` – list directory contents<br/>
+- `cd path` – change directory<br/>
+- `cd ..` – up one level • `cd ~` – go to home<br/>
+- Absolute path starts with `/` (Mac/Linux) or `C:\` (Windows).<br/>
+<br/>
+```bash<br/>
+pwd<br/>
+ls -lah                # long list, human sizes, show hidden<br/>
+cd ~/Projects          # go to Projects (macOS/Linux)<br/>
+cd "C:\Users\YOU"      # Windows (PowerShell)<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Files &amp; Folders<br/>
+Create, copy, move, remove; **be careful with rm**.<br/>
+<br/>
+```bash<br/>
+# Create<br/>
+mkdir -p data/raw data/processed    # -p creates parents<br/>
+touch notes.md                      # new empty file<br/>
+<br/>
+# Copy / Move<br/>
+cp README.md docs/README.md<br/>
+mv notes.md docs/notes.md<br/>
+<br/>
+# Delete (safe)<br/>
+rm file.tmp<br/>
+rm -r old_folder                    # recursive (CAUTION)<br/>
+# Safer on macOS/Linux: send to Trash with 'trash' (brew install trash)<br/>
+```<br/>
+<br/>
+Windows PowerShell:<br/>
+```powershell<br/>
+New-Item notes.md -ItemType File<br/>
+New-Item data\raw -ItemType Directory<br/>
+Copy-Item README.md docs\<br/>
+Move-Item notes.md docs\<br/>
+Remove-Item old_folder -Recurse   # CAUTION<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Search &amp; Find<br/>
+Find files by name/content. Grep is your friend.<br/>
+<br/>
+```bash<br/>
+# Find by name<br/>
+find . -iname "*report*.csv"<br/>
+<br/>
+# Search text inside files (recursive)<br/>
+grep -RIn "SELECT .* FROM" .<br/>
+<br/>
+# ripgrep (faster): brew install ripgrep | choco install ripgrep | apt install ripgrep<br/>
+rg -n "TODO" .<br/>
+```<br/>
+<br/>
+PowerShell equivalents:<br/>
+```powershell<br/>
+# By name<br/>
+Get-ChildItem -Recurse -Filter *report*.csv<br/>
+<br/>
+# By content<br/>
+Select-String -Path .\* -Pattern "SELECT .* FROM" -CaseSensitive:$false<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Viewing &amp; Editing Files<br/>
+```bash<br/>
+# Quick looks<br/>
+head -n 20 big.csv<br/>
+tail -f app.log              # live follow<br/>
+less big.csv                 # page through (q to quit)<br/>
+<br/>
+# Simple edits (nano is beginner-friendly)<br/>
+nano config.env<br/>
+vi config.env                # vim (advanced)<br/>
+<br/>
+# macOS quick look from terminal (preview window)<br/>
+qlmanage -p file.png 2&gt;/dev/null<br/>
+```<br/>
+<br/>
+PowerShell:<br/>
+```powershell<br/>
+Get-Content .\app.log -Wait   # like tail -f<br/>
+notepad .\config.env<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Permissions &amp; Ownership<br/>
+```bash<br/>
+# See permissions<br/>
+ls -l<br/>
+<br/>
+# Make a script executable<br/>
+chmod +x run.sh<br/>
+<br/>
+# Change owner (need sudo)<br/>
+sudo chown -R $USER:$USER ./project<br/>
+```<br/>
+<br/>
+PowerShell:<br/>
+```powershell<br/>
+# Windows uses ACLs; basic unblock for downloaded scripts:<br/>
+Unblock-File .\script.ps1<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Processes &amp; System Info<br/>
+```bash<br/>
+ps aux | head<br/>
+top                            # live view (q to quit)<br/>
+htop                           # nicer top (brew/choco/apt install htop)<br/>
+kill -9 &lt;PID&gt;                  # force kill<br/>
+```<br/>
+<br/>
+PowerShell:<br/>
+```powershell<br/>
+Get-Process | Select-Object -First 10<br/>
+Stop-Process -Id &lt;PID&gt; -Force<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Networking &amp; Localhost<br/>
+```bash<br/>
+# What’s listening?<br/>
+lsof -i :5432                  # Postgres port<br/>
+netstat -an | head<br/>
+<br/>
+# Test connectivity<br/>
+ping 8.8.8.8<br/>
+curl http://localhost:8000<br/>
+```<br/>
+<br/>
+PowerShell:<br/>
+```powershell<br/>
+Get-NetTCPConnection -LocalPort 5432<br/>
+Test-NetConnection -ComputerName localhost -Port 8000<br/>
+Invoke-WebRequest http://localhost:8000<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Environment &amp; Packages<br/>
+**macOS/Linux package managers:** Homebrew (`brew`), APT (`apt`), dnf/yum.  <br/>
+**Windows:** winget, Chocolatey (`choco`).<br/>
+<br/>
+```bash<br/>
+# Homebrew (macOS/Linux)<br/>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"<br/>
+brew update &amp;&amp; brew upgrade<br/>
+brew install git python node docker htop ripgrep<br/>
+<br/>
+# APT (Ubuntu/Debian)<br/>
+sudo apt update &amp;&amp; sudo apt upgrade -y<br/>
+sudo apt install -y git python3 python3-venv docker.io ripgrep<br/>
+<br/>
+# Windows (winget)<br/>
+winget install Git.Git Python.Python.3 NodeJS.NodeJS Docker.DockerDesktop BurntSushi.ripgrep.MSVC<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Python &amp; Virtual Environments<br/>
+Keep dependencies isolated per project.<br/>
+<br/>
+```bash<br/>
+# Create venv (per project)<br/>
+cd ~/Projects/30_Data/Active/2025_02_Data_Quality_Audit<br/>
+python3 -m venv .venv<br/>
+source .venv/bin/activate          # macOS/Linux<br/>
+# Windows PowerShell:<br/>
+# .venv\Scripts\Activate.ps1<br/>
+<br/>
+pip install --upgrade pip<br/>
+pip install pandas jupyterlab numpy pyarrow<br/>
+<br/>
+# Freeze deps<br/>
+pip freeze &gt; requirements.txt<br/>
+<br/>
+# Deactivate<br/>
+deactivate<br/>
+```<br/>
+<br/>
+Jupyter quick start:<br/>
+```bash<br/>
+python -m pip install jupyterlab<br/>
+jupyter lab<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Git &amp; GitHub Workflow<br/>
+Initialize, branch, commit, push (feature-branch model).<br/>
+<br/>
+```bash<br/>
+# First-time global config<br/>
+git config --global user.name  "Jeremy Harris"<br/>
+git config --global user.email "you@example.com"<br/>
+git config --global init.defaultBranch main<br/>
+<br/>
+# New repo<br/>
+cd ~/Projects/30_Data/Active/2025_02_Data_Quality_Audit<br/>
+git init<br/>
+cp ~/Projects/00_ADMIN/Git_Configs/python.gitignore .gitignore<br/>
+git add .<br/>
+git commit -m "init: scaffold project"<br/>
+<br/>
+# Create feature branch<br/>
+git checkout -b feat/data-cleaning<br/>
+<br/>
+# After work<br/>
+git add -A<br/>
+git commit -m "feat: add cleaning pipeline"<br/>
+git push -u origin feat/data-cleaning   # after adding remote<br/>
+```<br/>
+<br/>
+Add remote &amp; push initial:<br/>
+```bash<br/>
+git remote add origin https://github.com/&lt;user&gt;/&lt;repo&gt;.git<br/>
+git push -u origin main<br/>
+```<br/>
+<br/>
+Update main with latest:<br/>
+```bash<br/>
+git checkout main<br/>
+git pull --rebase origin main<br/>
+git merge --no-ff feat/data-cleaning<br/>
+git push origin main<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Docker Essentials<br/>
+Containers for databases, dev services.<br/>
+<br/>
+```bash<br/>
+# Verify<br/>
+docker --version<br/>
+docker ps<br/>
+<br/>
+# Run Postgres locally<br/>
+docker run --name pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:16<br/>
+<br/>
+# Logs &amp; exec<br/>
+docker logs -f pg<br/>
+docker exec -it pg psql -U postgres<br/>
+<br/>
+# Stop/remove<br/>
+docker stop pg &amp;&amp; docker rm pg<br/>
+```<br/>
+<br/>
+docker-compose.yml example:<br/>
+```yaml<br/>
+version: "3.9"<br/>
+services:<br/>
+  db:<br/>
+    image: postgres:16<br/>
+    restart: unless-stopped<br/>
+    environment:<br/>
+      POSTGRES_PASSWORD: postgres<br/>
+    ports:<br/>
+      - "5432:5432"<br/>
+    volumes:<br/>
+      - ./volumes/pg:/var/lib/postgresql/data<br/>
+```<br/>
+<br/>
+Run:<br/>
+```bash<br/>
+docker compose up -d<br/>
+docker compose logs -f db<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## Databases (Postgres &amp; SQLite)<br/>
+```bash<br/>
+# Postgres CLI<br/>
+psql -h localhost -U postgres -d postgres<br/>
+# Inside psql:<br/>
+-- \l   list databases<br/>
+-- \dt  list tables<br/>
+-- \q   quit<br/>
+<br/>
+# SQLite quick ops<br/>
+sqlite3 my.db "SELECT sqlite_version();"<br/>
+sqlite3 my.db ".tables"<br/>
+sqlite3 my.db "CREATE TABLE t(id INTEGER PRIMARY KEY, name TEXT);"<br/>
+```<br/>
+<br/>
+---<br/>
+<br/>
+## VS Code Power Moves<br/>
+```bash<br/>
+# Install 'code' shell command (macOS)<br/>
+# In VS Code: Cmd+Shift+P → "Shell Command: Install 'code' command in PATH"<br/>
+code .                # open current folder<br/>
+code README.md        # open file<br/>
+```<br/>
+<br/>
+Useful extensions:<br/>
+- Python (Microsoft)<br/>
+- Jupyter<br/>
+- SQLTools<br/>
+- Docker<br/>
+- GitLens<br/>
+- Markdown All in One<br/>
+- Prettier / Black<br/>
+<br/>
+Settings tips:<br/>
+- Enable autosave for code, disable it for binary assets.<br/>
+- Turn on “Format on Save”.<br/>
+<br/>
+---<br/>
+<br/>
+## macOS · Windows · Linux Equivalents<br/>
+<br/>
+| Task | macOS/Linux | Windows (PowerShell) |<br/>
+|-----|-------------|----------------------|<br/>
+| List files | `ls -lah` | `Get-ChildItem -Force` |<br/>
+| Current dir | `pwd` | `Get-Location` |<br/>
+| Move file | `mv a b/` | `Move-Item a b\` |<br/>
+| Copy file | `cp a b/` | `Copy-Item a b\` |<br/>
+| Delete dir | `rm -r dir` | `Remove-Item dir -Recurse` |<br/>
+| Tail file | `tail -f app.log` | `Get-Content app.log -Wait` |<br/>
+| Find text | `grep -RIn PATTERN .` | `Select-String -Path .\* -Pattern PATTERN` |<br/>
+| Process list | `top` / `htop` | `Get-Process` |<br/>
+| Kill PID | `kill -9 PID` | `Stop-Process -Id PID -Force` |<br/>
+<br/>
+---<br/>
+<br/>
+## Safety Nets<br/>
+- **Ctrl + C** → cancel a stuck command.<br/>
+- **Up/Down arrows** → cycle command history.<br/>
+- **Tab** → autocomplete paths/commands.<br/>
+- `trash` CLI moves to Trash instead of permanent delete (macOS: `brew install trash`).<br/>
+- Use `.gitignore` to avoid committing large data, envs, secrets.<br/>
+- Keep active work **local** (not iCloud): `~/Projects/...`<br/>
+<br/>
+---<br/>
+<br/>
+### Keep This Handy<br/>
+Save this as `~/Projects/00_ADMIN/cli_cheatsheet.md` and add to your VS Code workspace.<br/>
+```bash<br/>
+mkdir -p ~/Projects/00_ADMIN<br/>
+cp cli_cheatsheet.md ~/Projects/00_ADMIN/cli_cheatsheet.md<br/>
+```<br/>
+</body></html>

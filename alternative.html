@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jeremy Harris | Data Analyst</title>
+
+<!-- Open Graph (LinkedIn, Facebook, Slack, Discord) -->
+<meta property="og:title" content="Jeremy Harris | Data Analytics & Insights Portfolio" />
+<meta property="og:description" content="Data-driven problem solving, analytics, and workflow improvement. Explore dashboards, data models, and end-to-end projects demonstrating real-world impact and clear decision support." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://yourwebsite.com/" />
+<meta property="og:image" content="https://yourwebsite.com/preview.png" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Jeremy Harris | Data Analytics & Insights Portfolio" />
+<meta name="twitter:description" content="Dashboards, analytics, and practical projects solving real business problems through clean data, clarity, and strategy." />
+<meta name="twitter:image" content="https://yourwebsite.com/preview.png" />
+
+<!-- Standard SEO -->
+<meta name="description" content="Portfolio of Jeremy Harris – Data analytics, visualization, and real-world problem solving across industries. View dashboards, SQL, data modeling, and project case studies." />
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.png" sizes="any" />
+
+  <style>
+    /* ===== CSS variables (light/dark) ===== */
+    :root {
+      --bg: #f7f7f8;
+      --text: #1a1a1a;
+      --muted: #666;
+      --primary: #0a6cff;
+      --accent: #ff6a00;
+      --card: #ffffff;
+      --border: #e6e6e6;
+      --footer-bg: #121212;
+      --footer-text: #fafafa;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+    .dark {
+      --bg: #161616;
+      --text: #e8e8e8;
+      --muted: #b0b0b0;
+      --card: #1f1f1f;
+      --border: #2a2a2a;
+      --footer-bg: #0c0c0c;
+      --footer-text: #d8d8d8;
+      --shadow: 0 10px 28px rgba(0,0,0,.35);
+    }
+
+    /* ===== Base ===== */
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background .3s, color .3s;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { max-width: 100%; display: block; }
+
+    /* ===== Layout ===== */
+    header {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff;
+      text-align: center;
+      padding: 72px 20px 84px;
+      position: relative;
+    }
+    header h1 { margin: 0; font-size: clamp(1.8rem, 2.8vw, 2.6rem); }
+    header p { margin: 10px 0 0; opacity: .95; font-size: 1.05rem; }
+
+    .theme-toggle {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff; padding: 8px 14px; border-radius: 999px;
+      cursor: pointer; font-size: .95rem; backdrop-filter: blur(6px);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .theme-toggle:hover { transform: translateY(-1px); background: rgba(255,255,255,.26); }
+
+    main { max-width: 980px; padding: 56px 20px; margin: 0 auto; }
+    section { margin: 0 auto 56px; }
+    section h2 {
+      display: inline-block; margin: 0 0 14px; font-size: 1.35rem;
+      border-bottom: 3px solid var(--accent); padding-bottom: 6px; color: var(--primary);
+    }
+    .muted { color: var(--muted); }
+
+    /* ===== Components ===== */
+    .grid { display: grid; gap: 18px; }
+    .grid.cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform .45s ease, opacity .45s ease, background .3s, color .3s;
+    }
+    .card.in-view { transform: translateY(0); opacity: 1; }
+    .card:hover { transform: translateY(-2px); }
+
+    .btn, .icon-btn, .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 8px 12px; background: var(--card); color: var(--text);
+      transition: background .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    .btn:hover, .icon-btn:hover, .chip:hover { transform: translateY(-1px); }
+
+    .icon { width: 18px; height: 18px; display: inline-block; }
+    .icon-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .download-btn {
+      background: var(--accent); color: #fff; border-color: transparent; font-weight: 600;
+    }
+    .download-btn:hover { background: var(--primary); }
+
+    footer {
+      background: var(--footer-bg); color: var(--footer-text);
+      text-align: center; padding: 28px 16px;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 56px 16px 70px; }
+      main { padding: 40px 16px; }
+      .btn, .icon-btn, .download-btn { width: 100%; justify-content: center; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="theme-toggle" id="themeToggle" aria-pressed="false">🌙 Dark Mode</button>
+    <h1>Jeremy Harris</h1>
+    <p>Data Analyst · Turning data into decisions</p>
+  </header>
+
+  <main>
+    <!-- About -->
+    <section id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <p>I specialize in transforming multi‑source data into accurate, decision‑ready insights. I enjoy the full stack of analytics: defining the problem, validating data, writing efficient SQL, modeling, and building clear visualizations for stakeholders.</p>
+      <p class="muted">Tools: Tableau, PostgreSQL, Docker, VS Code, GitHub, DBeaver, ArcGIS · Growing: Python (pandas), dbt, Power BI.</p>
+      <p>Strong interest in healthcare analytics where data quality impacts patient access, outcomes, compliance, and operations. I value thoughtful, curious, and collaborative environments.</p>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
+      <canvas id="skillsChart" width="600" height="320" aria-label="Skill proficiency chart" role="img"></canvas>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+
+      <div class="grid cards">
+        <article class="card" aria-labelledby="proj1-title">
+          <h3 id="proj1-title">Medicare Inpatient Utilization — SQL Data Pipeline</h3>
+          <p>A rerunnable SQL pipeline that turns raw CMS inpatient files into an analysis‑ready <code>utilization_trends</code> table with data quality checks (duplicates, nulls, referential integrity) and idempotent loads.</p>
+          <div class="icon-row" aria-label="Project links">
+            <a class="icon-btn" href="https://github.com/hanjre/medicare-inpatient-utilization" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub">
+              <img class="icon" alt="GitHub" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
+              <span>Source</span>
+            </a>
+            <a class="icon-btn" href="https://public.tableau.com/views/MDCR_A_Utilization/MDCRAUtilization" target="_blank" rel="noopener noreferrer" aria-label="Open Tableau dashboard">
+              <svg class="icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#E97627" d="M121 19h14v29h17v13h-17v28h-14V61H104V48h17z"/><path fill="#2A6DB4" d="M219 107h14v29h17v13h-17v28h-14v-28h-17v-13h17zM23 107h14v29h17v13H37v28H23v-28H6v-13h17zM121 195h14v29h17v13h-17v28h-14v-28h-17v-13h17z"/><path fill="#E97627" d="M170 58h12v24h14v11h-14v24h-12V93h-14V82h14zM74 58h12v24h14v11H86v24H74V93H60V82h14zM170 154h12v24h14v11h-14v24h-12v-24h-14v-11h14zM74 154h12v24h14v11H86v24H74v-24H60v-11h14z"/></svg>
+              <span>Dashboard</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="card" aria-labelledby="proj2-title">
+          <h3 id="proj2-title">Project 2</h3>
+          <p>Brief description of the project. Link to Tableau or GitHub.</p>
+        </article>
+
+        <article class="card" aria-labelledby="proj3-title">
+          <h3 id="proj3-title">Project 3</h3>
+          <p>Brief description of the project. Link to Tableau or GitHub.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Resume -->
+    <section id="resume" aria-labelledby="resume-heading">
+      <h2 id="resume-heading">Résumé</h2>
+      <article class="card" aria-labelledby="job1-title">
+        <h3 id="job1-title">Data Analyst · Company Name</h3>
+        <p class="muted">Start — End</p>
+        <ul>
+          <li>Analyzed data and built dashboards using Tableau and Excel.</li>
+          <li>Partnered with business stakeholders to deliver actionable insights.</li>
+        </ul>
+        <p>
+          <a class="btn download-btn" href="/resume.pdf" download target="_blank" rel="noopener">📄 Download Résumé</a>
+        </p>
+      </article>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact & Links</h2>
+      <div class="icon-row">
+        <a class="btn" href="#" target="_blank" rel="noopener">Tableau</a>
+        <a class="btn" href="https://github.com/hanjre" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Jeremy Harris. All rights reserved.
+  </footer>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+
+    // Theme toggle
+    const btn = document.getElementById('themeToggle');
+    const KEY = 'theme';
+    const saved = localStorage.getItem(KEY);
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    const startDark = saved ? saved === 'dark' : prefersDark;
+    document.body.classList.toggle('dark', startDark);
+    btn.setAttribute('aria-pressed', String(startDark));
+    btn.textContent = startDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    btn.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(isDark));
+      btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+
+    // ===== Level config =====
+    const LEVELS = [
+      {min: 0,  max: 20,  name: 'Novice',       band: 'rgba(220, 53, 69, 0.08)',  bar: 'rgba(220, 53, 69, 0.8)'},
+      {min: 21, max: 40,  name: 'Beginner',     band: 'rgba(255, 193, 7, 0.10)',  bar: 'rgba(255, 193, 7, 0.85)'},
+      {min: 41, max: 60,  name: 'Intermediate', band: 'rgba(13, 110, 253, 0.08)', bar: 'rgba(13, 110, 253, 0.85)'},
+      {min: 61, max: 80,  name: 'Advanced',     band: 'rgba(25, 135, 84, 0.10)',  bar: 'rgba(25, 135, 84, 0.85)'},
+      {min: 81, max: 100, name: 'Expert',       band: 'rgba(111, 66, 193, 0.10)', bar: 'rgba(111, 66, 193, 0.85)'}
+    ];
+    const getLevel = (v) => LEVELS.find(l => v >= l.min && v <= l.max) || LEVELS[0];
+
+    // IntersectionObserver for fade-in cards + lazy chart init
+    const cards = document.querySelectorAll('.card');
+    const chartEl = document.getElementById('skillsChart');
+    let chartInit = false;
+
+    const onEnter = (el) => el.classList.add('in-view');
+
+    // Background bands plugin
+    const bgBands = {
+      id: 'bgBands',
+      beforeDraw(chart) {
+        const {ctx, chartArea, scales} = chart;
+        if (!chartArea) return;
+        const y = scales.y;
+        LEVELS.forEach(level => {
+          const top = y.getPixelForValue(level.max);
+          const bottom = y.getPixelForValue(level.min);
+          ctx.save();
+          ctx.fillStyle = level.band;
+          ctx.fillRect(chartArea.left, top, chartArea.right - chartArea.left, bottom - top);
+          ctx.restore();
+        });
+      }
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        if (e.target.classList.contains('card')) onEnter(e.target);
+        if (e.target === chartEl && !chartInit && window.Chart) {
+          const labels = ['Python','Pandas','SQL','PostgreSQL','Excel','Tableau','Power BI'];
+          const data = [28,22,55,55,50,48,25];
+          const barColors = data.map(v => getLevel(v).bar);
+
+          new Chart(chartEl.getContext('2d'), {
+            type: 'bar',
+            data: { labels, datasets: [{ label: 'Skill Level', data, backgroundColor: barColors, borderColor: 'rgba(0,0,0,0.2)', borderWidth: 1 }]},
+            options: {
+              responsive: true,
+              animation: { duration: 1200, easing: 'easeOutQuart' },
+              plugins: { legend: { display: false } },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                  ticks: {
+                    stepSize: 20,
+                    padding: 6,
+                    callback: (value) => {
+                      if ([20,40,60,80].includes(value)) {
+                        const lvl = LEVELS.find(l => l.max === value);
+                        return lvl ? (lvl.name.charAt(0).toUpperCase() + lvl.name.slice(1).toLowerCase()) : '';
+                      }
+                      return '';
+                    }
+                  },
+                  grid: { color: 'rgba(0,0,0,0.05)', drawBorder: false }
+                },
+                x: { ticks: { maxRotation: 0, autoSkip: false } }
+              }
+            },
+            plugins: [bgBands]
+          });
+
+          // HTML legend render
+          const legendEl = document.getElementById('skillsLegend');
+          if (legendEl) {
+            legendEl.innerHTML = '';
+            const ul = document.createElement('ul');
+            LEVELS.forEach(l => {
+              const li = document.createElement('li');
+              const sw = document.createElement('span');
+              sw.className = 'swatch';
+              sw.style.background = l.bar;
+              li.appendChild(sw);
+              li.appendChild(document.createTextNode(`${l.name} (${l.min}–${l.max})`));
+              ul.appendChild(li);
+            });
+            legendEl.appendChild(ul);
+          }
+
+          chartInit = true;
+        }
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.12 });
+
+    [...cards, chartEl].forEach((el) => el && io.observe(el));
+  </script>
+
+  <noscript>
+    This site works best with JavaScript enabled. You can still download my résumé above.
+  </noscript>
+</body>
+</html>
