@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title> Jeremy Harris | Data Analyst </title>
@@ -310,7 +311,25 @@ section h2 {
 }
 </style>
 </head>
-
+<style>
+.skill-tooltip {
+  position: fixed;
+  background: #111;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  max-width: 260px;
+  line-height: 1.4;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  pointer-events: none;
+  z-index: 9999;
+}
+.skill-tooltip ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+</style>
 <body>
 
 <header>
@@ -323,29 +342,30 @@ section h2 {
 <h2>About Me</h2>
 
 <p>
-I’m a healthcare data professional transitioning into a full-time Data Analyst role, with over 12 years of experience working directly with patient access, insurance verification, encounter data, and revenue-cycle workflows in hospital settings. My background centers on data accuracy, compliance, and resolving discrepancies across multiple systems to support billing integrity and operational efficiency.
+I am a Data Analyst focused on transforming complex, multi-source data into accurate, actionable insights that support operational improvement and decision-making. Over the past two years, I have developed end-to-end analytics capabilities through intensive training, certification (CompTIA Data+), and independent project work using real-world datasets.
 </p>
 
 <p>
-In my current independent analytics work, I build end-to-end projects using PostgreSQL, Tableau, and Python — working from raw CMS datasets through data validation, transformation, modeling, and visualization. I focus on writing clear, efficient SQL, documenting logic carefully, and producing dashboards that communicate findings in a straightforward, decision-ready format.
+My work spans the full analytics lifecycle: problem definition, data acquisition and validation, SQL development, data modeling, and visualization. I build projects using PostgreSQL, Tableau, and Python, emphasizing clear logic, reproducibility, and dashboards that communicate findings in a concise, decision-ready format.
 </p>
 
 <p>
-My experience includes <strong>Tableau, PostgreSQL, Docker, GitHub, VS Code, DBeaver, and ArcGIS</strong>. I am expanding into <strong>Python (pandas), dbt, and Power BI</strong> to strengthen my analytics engineering and modern BI practices, while maintaining a strong foundation in data quality and healthcare operations.
+My technical toolkit includes <strong>SQL (PostgreSQL), Tableau, Python (pandas), Docker, GitHub, VS Code, and DBeaver</strong>, with ongoing development in <strong>dbt and Power BI</strong> to support modern analytics engineering and BI workflows.
 </p>
 
 <p>
-I am especially drawn to healthcare analytics because reliable data directly impacts patient access, regulatory compliance, reimbursement accuracy, and operational planning. Having worked on the front line of emergency department registration and hospital workflows, I understand how small data errors can create downstream financial and clinical consequences.
+I bring over 12 years of frontline healthcare operations experience in patient access, insurance verification, and revenue-cycle workflows. This background provides domain knowledge that informs my analytical approach, particularly around data quality, compliance, and the downstream impact of inaccurate or incomplete information.
 </p>
 
 <p>
-I’m seeking a stable, collaborative environment where I can contribute to data validation, reporting, and operational insights — particularly within healthcare, insurance, or other regulated industries where accuracy, documentation, and thoughtful analysis matter. I’m also open to selective project-based or contract opportunities where strong data quality and structured problem-solving can create measurable improvements.
+I am particularly interested in healthcare analytics because reliable data directly affects patient access, regulatory requirements, reimbursement accuracy, and operational planning. I am seeking a stable, collaborative environment where rigorous analysis, documentation, and data integrity are valued, and where analytics can drive measurable improvements.
 </p>
 </section>
 
 <section id="skills">
-<h2>Skills</h2>
-<canvas id="skillsChart" width="400" height="200"></canvas>
+  <h2>Skills</h2>
+  <canvas id="skillsChart" width="400" height="200"></canvas>
+  <div id="skillTooltip" class="skill-tooltip" hidden></div>
 </section>
 
 <section id="projects">
@@ -593,6 +613,87 @@ const skillsData = {
   }]
 };
 
+// =======================
+// HTML tooltip element + show/hide
+// =======================
+const tooltipEl = document.getElementById('skillTooltip');
+
+// Optional: mapped skills per tool + level
+const SKILLS = {
+  Excel: {
+    Novice: ['Basic formulas', 'Sorting & filtering'],
+    Beginner: ['Pivot Tables', 'XLOOKUP / VLOOKUP', 'Conditional formatting'],
+    Intermediate: ['Power Query (basic)', 'Data cleaning workflows'],
+    Advanced: ['Power Pivot', 'DAX basics'],
+    Expert: ['VBA automation']
+  },
+  SQL: {
+    Novice: ['SELECT, WHERE'],
+    Beginner: ['JOINs', 'GROUP BY', 'Aggregations'],
+    Intermediate: ['Window functions', 'Data validation queries'],
+    Advanced: ['Indexes, EXPLAIN plans'],
+    Expert: ['Warehouse modeling', 'Performance tuning']
+  },
+  Python: {
+    Novice: ['Basic syntax'],
+    Beginner: ['Scripts', 'Using libraries'],
+    Intermediate: ['Reusable functions', 'File processing'],
+    Advanced: ['Automation', 'API integration'],
+    Expert: ['Production-grade systems']
+  },
+  Tableau: {
+    Novice: ['Basic charts'],
+    Beginner: ['Dashboards', 'Filters'],
+    Intermediate: ['Calculated fields', 'Parameters'],
+    Advanced: ['Data modeling', 'Performance tuning'],
+    Expert: ['Enterprise deployment']
+  },
+  'Power BI': {
+    Novice: ['Basic visuals'],
+    Beginner: ['Dashboards', 'Filters'],
+    Intermediate: ['DAX basics', 'Data modeling'],
+    Advanced: ['Performance optimization'],
+    Expert: ['Enterprise solutions']
+  }
+};
+
+function getSkills(label, value) {
+  label = String(label || '').trim();
+  const levelName = getLevel(value).name;
+
+  const order = LEVELS.map(l => l.name);
+  const idx = order.indexOf(levelName);
+
+  let skills = [];
+  for (let i = 0; i <= idx; i++) {
+    const lvl = order[i];
+    skills = skills.concat(SKILLS[label]?.[lvl] || []);
+  }
+
+  return { levelName, skills };
+}
+
+function showTooltip(x, y, label, value) {
+  if (!tooltipEl) return;
+
+  const { levelName, skills } = getSkills(label, value);
+
+  tooltipEl.innerHTML = `
+    <strong>${label} — ${levelName} (${value})</strong>
+    ${skills.length ? `<ul>${skills.map(s => `<li>${s}</li>`).join('')}</ul>` : ''}
+  `;
+
+  tooltipEl.style.left = (x + 12) + 'px';
+  tooltipEl.style.top  = (y + 12) + 'px';
+  tooltipEl.hidden = false;
+}
+
+function hideTooltip() {
+  if (!tooltipEl) return;
+  tooltipEl.hidden = true;
+}
+
+
 const skillsOptions = {
   responsive: true,
   animation: { duration: 1200, easing: 'easeOutQuart' },
@@ -619,21 +720,31 @@ const skillsOptions = {
     }
   },
   plugins: {
-    legend: { display: false },
-    tooltip: {
-      callbacks: {
-        label: function(ctx) {
-          const v = ctx.parsed.y;
-          const lvl = getLevel(v);
-          return `${ctx.label}: ${v} — ${lvl.name}`;
-        }
-      }
-    },
-    // Optional HTML legend container (add <div id="skillsLegend"></div> in your HTML)
-    htmlLegend: {
-      containerID: 'skillsLegend'
+  legend: { display: false },
+  tooltip: {
+    enabled: false,
+    external: function(context) {
+      // if your showTooltip/hideTooltip aren’t defined yet, fail safely
+      if (typeof hideTooltip !== 'function' || typeof showTooltip !== 'function') return;
+
+      const { chart, tooltip } = context;
+      if (!tooltip || tooltip.opacity === 0) { hideTooltip(); return; }
+
+      const dp = tooltip.dataPoints?.[0];
+      if (!dp) { hideTooltip(); return; }
+
+      const label = chart.data.labels[dp.dataIndex];
+      const value = dp.raw;
+
+      const rect = chart.canvas.getBoundingClientRect();
+      const x = rect.left + tooltip.caretX;
+      const y = rect.top + tooltip.caretY;
+
+      showTooltip(x, y, label, value);
     }
-  }
+  },
+  htmlLegend: { containerID: 'skillsLegend' }
+}
 };
 
 // Optional: custom HTML legend for band colors
@@ -754,7 +865,9 @@ window.addEventListener('load', onScroll);
   window.addEventListener('scroll', onScroll);
   window.addEventListener('load', onScroll);
 })();
+
+
 </script>
+
 </body>
 </html>
-
